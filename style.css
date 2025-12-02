@@ -1,0 +1,31 @@
+body {
+    background: #1a1a1a;
+    color: white;
+}
+
+.main-card {
+    background: #2e3a44;
+    border-radius: 40px;
+    text-align: center;
+    color: #FFFFFF;
+    max-width: 900px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.4);
+}
+
+.bottom-bar {
+    background: #222;
+    width: 100%;
+}
+
+.icon-btn {
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.icon-btn:hover {
+    transform: scale(1.1);
+    opacity: 0.9;
+}
