@@ -8,10 +8,9 @@ body {
     background: #2a3a44;
     color: white;
     border-radius: 40px;
-    text-align: center;
-    max-width: 95vw;     /* Almost full width on phones */
-    height:90vw;
-    min-height: 90%;
+    text-align: center; 
+    height:85vh;
+    min-height: 80vh;
     margin: 0 auto;
 }
 
