@@ -10,13 +10,14 @@ body {
     text-align: center;
     color: #FFFFFF;
     max-width: 1920px;
-    min-height: 550px;
+    min-height: 80%;
     box-shadow: 0 0 20px rgba(0,0,0,0.4);
 }
 
 .navbar {
     background: #263238;
     width: 100%;
+    height: 10%;
 }
 
 .icon-btn {
