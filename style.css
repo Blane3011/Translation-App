@@ -9,8 +9,8 @@ body {
     color: white;
     border-radius: 40px;
     text-align: center; 
-    height:75%;
-    min-height: 75%;
+    height:75vh;
+    min-height: 75vh;
     margin: 0 auto;
 }
 

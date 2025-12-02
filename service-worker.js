@@ -1,7 +1,7 @@
 self.addEventListener("install", (event) => {
     event.waitUntil(
         caches.open("translation-cache").then((cache) => {
-            return cache.addAll(["index.html", "style.css", "app.js"]);
+            return cache.addAll([assets]);
         })
     );
 });
@@ -13,3 +13,10 @@ self.addEventListener("fetch", (event) => {
         })
     );
 });
+
+var assets = [
+    '/',
+    '/index.html',
+    '/style.css',
+    '/app.js'
+];

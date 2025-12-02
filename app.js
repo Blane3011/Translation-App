@@ -3,3 +3,7 @@ if ("serviceWorker" in navigator) {
     .then(() => console.log("Service Worker Registered"))
     .catch(error => console.log("Service Worker Registration Failed", error));
 }
+
+document.addEventListener("click", () => {
+    alert("Document clicked!");
+});
