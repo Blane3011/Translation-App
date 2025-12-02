@@ -11,6 +11,7 @@ const constraints = {
 
 document.getElementById("microphoneButton").addEventListener("click", () => {
     alert("Recording started. Please allow microphone access if prompted.");
+    document.getElementById("microphoneButton").src = "Images/Icons/activeMicrophone.png";
 });
 
 navigator.mediaDevices
