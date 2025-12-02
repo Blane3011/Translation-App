@@ -1,6 +1,7 @@
 body {
     background: #1a1a1a;
     color: white;
+    background-color: #121212;
 }
 
 .main-card {
@@ -9,13 +10,12 @@ body {
     text-align: center;
     color: #FFFFFF;
     max-width: 1920px;
-    min-height: 1080px;
-    max-height: 1080px;
+    min-height: 800px;
     box-shadow: 0 0 20px rgba(0,0,0,0.4);
 }
 
-.bottom-bar {
-    background: #222;
+.navbar {
+    background: #263238;
     width: 100%;
 }
 
@@ -31,3 +31,4 @@ body {
     transform: scale(1.1);
     opacity: 0.9;
 }
+
