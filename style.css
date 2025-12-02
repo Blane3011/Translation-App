@@ -8,7 +8,9 @@ body {
     border-radius: 40px;
     text-align: center;
     color: #FFFFFF;
-    max-width: 900px;
+    max-width: 1920px;
+    min-height: 1080px;
+    max-height: 1080px;
     box-shadow: 0 0 20px rgba(0,0,0,0.4);
 }
 
