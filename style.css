@@ -10,6 +10,7 @@ body {
     border-radius: 40px;
     text-align: center;
     max-width: 95vw;     /* Almost full width on phones */
+    height:90vw;
     margin: 0 auto;
 }
 
@@ -20,9 +21,11 @@ body {
 }
 
 .icon-btn {
-     width: 12vw;        /* Scales with screen */
-    max-width: 42px;    /* Won’t get too big */
-    height: auto;
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: 0.2s;
 }
 
 .icon-btn:hover {
