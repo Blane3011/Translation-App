@@ -5,13 +5,12 @@ body {
 }
 
 .main-card {
-    background: #2e3a44;
+    background: #2a3a44;
+    color: white;
     border-radius: 40px;
     text-align: center;
-    color: #FFFFFF;
-    max-width: 1920px;
-    min-height: 80%;
-    box-shadow: 0 0 20px rgba(0,0,0,0.4);
+    max-width: 95vw;     /* Almost full width on phones */
+    margin: 0 auto;
 }
 
 .navbar {
@@ -21,11 +20,9 @@ body {
 }
 
 .icon-btn {
-    width: 65px;
-    height: 65px;
-    border-radius: 50%;
-    cursor: pointer;
-    transition: 0.2s;
+     width: 12vw;        /* Scales with screen */
+    max-width: 42px;    /* Won’t get too big */
+    height: auto;
 }
 
 .icon-btn:hover {
