@@ -1,6 +1,6 @@
 self.addEventListener("install", (event) => {
     event.waitUntil(
-        caches.open("weather-cache").then((cache) => {
+        caches.open("translation-cache").then((cache) => {
             return cache.addAll(["index.html", "style.css", "app.js"]);
         })
     );

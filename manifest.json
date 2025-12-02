@@ -3,7 +3,7 @@
   "name": "AI Translator App",
   "short_name": "AI Translator",
   "description": "A translator powered using AI APIs.",
-  "start_url": "./",
+  "start_url": "index.html",
   "background_color": "#121212",
   "theme_color": "#B0BEC5",
   "orientation": "portrait",
@@ -11,7 +11,8 @@
   "icons": [
       {
           "src": "./Images/LynxLogo.png",
-          "sizes": "512x512"
+          "sizes": "512x512",
+          "type": "image/png"
       }
   ]
 }
