@@ -17,6 +17,10 @@ self.addEventListener("fetch", (event) => {
 var assets = [
     '/',
     '/index.html',
+    "/translationScreen.html",
+    "/languageSelectionScreen.html",
+    "/SavedConversationsScreen.html",
     '/style.css',
-    '/app.js'
+    '/app.js',
+    '/translation.js',
 ];
