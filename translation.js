@@ -4,7 +4,6 @@ const constraints =
   video: false,
 };
 
-getMicrophoneAccess();
 
 var recording = false
 var messages = [];
@@ -31,36 +30,12 @@ recognition.interimResults = false;
 recognition.maxAlternatives = 1;
 recognition.processLocally = true;
 
-function getMicrophoneAccess() {
-    navigator.mediaDevices
-  .getUserMedia(constraints)
-  .then((stream) => {
-    const audioTracks = stream.getAudioTracks();
-    console.log("Got stream with constraints:", constraints);
-    console.log(`Using audio device: ${audioTracks[0].label}`);
-    stream.onremovetrack = () => {
-      console.log("Stream ended");
-    };
-    //audio.srcObject = stream;
-  })
-  .catch((error) => {
-
-    if (error.name === "NotAllowedError")
-    {
-      console.error("You need to grant this page permission to access your microphone.");
-    } else 
-        {
-        console.error(`getUserMedia error: ${error.name}`, error);
-        }
-  });
-};
-
 async function startRecording(event) {
   event.preventDefault();
   recognition.start();
   console.log("Transcribing audio...");
     
-    document.getElementById("microphoneIcon").src = "Images/Icons/activeMicrophone.png";
+  document.getElementById("microphoneIcon").src = "Images/Icons/activeMicrophone.png";
 }
 
 function stopRecording()
@@ -137,31 +112,9 @@ if(messages.length == 0)
   document.getElementById("messageBox").innerHTML = "<h4 class='text-center'>No messages yet. Start recording to create a message!</h4>";
 }
 
-
-recognition.onresult = (event) => {
+recognition.onresult = function(event){
   alert("Processing local speech recognition for en-GB");
   console.log("Speech recognition result received.");
-  SpeechRecognition.available({ langs: ["en-GB"], processLocally: true }).then(
-    (result) => {
-      if (result === "unavailable") {
-        alert("en-GB is not available to download at this time. Sorry!");
-      } else if (result === "available") {
-       //recognition.start();
-      } else {
-        diagnostic.textContent = `en-GB language pack is downloading...`;
-        SpeechRecognition.install({
-          langs: ["en-GB"],
-          processLocally: true,                                          
-        }).then((result) => {
-          if (result) {
-            alert("en-GB language pack downloaded. Start recognition again.");
-          } else {
-             alert("en-GB language pack failed to download. Try again later.");
-          }
-        });
-      }
-    },
-  );
-  console.log(event.result);
-
+  
+  console.log(event.results);
 };
