@@ -7,6 +7,7 @@ const constraints =
 var recording = false
 var messages = [];
 const mediaRecorder = new MediaRecorder(stream);
+alert("Translation Screen Loaded");
 
 if(messages.length == 0)
 {
