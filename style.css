@@ -25,6 +25,7 @@ body {
     border-radius: 50%;
     cursor: pointer;
     transition: 0.2s;
+    user-select: none;
 }
 
 .icon-btn:hover {
