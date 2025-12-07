@@ -13,6 +13,7 @@ let audioChunks = [];
 var microphoneButton = document.getElementById("microphoneButton");
 
 microphoneButton.addEventListener("mousedown", startRecording);
+microphoneButton.addEventListener("touchend", stopRecording);
 microphoneButton.addEventListener("mouseup", stopRecording);
 microphoneButton.addEventListener("touchstart", startRecording);
 
@@ -54,10 +55,8 @@ function getMicrophoneAccess() {
   });
 };
 
-async function startRecording() {
-
-   
-
+async function startRecording(event) {
+  event.preventDefault();
   recognition.start();
   console.log("Transcribing audio...");
     
@@ -166,4 +165,3 @@ recognition.onresult = (event) => {
   console.log(event.result);
 
 };
-
