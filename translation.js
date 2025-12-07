@@ -4,31 +4,25 @@ const constraints =
   video: false,
 };
 
+getMicrophoneAccess();
+
 var recording = false
 var messages = [];
 let audioChunks = [];
-//const mediaRecorder = new MediaRecorder(stream);
 
-document.getElementById("microphoneButton").addEventListener("click", () => {
-    navigator.permissions.query({ name: "microphone" }).then((result) =>
-    {
-      if (result.state === "granted") {
-            alert("Recording started.");
-            document.getElementById("microphoneIcon").src = "Images/Icons/activeMicrophone.png";
-            startRecording();
-            document.getElementById("microphoneButton").removeEventListener("click", () => {});
+var microphoneButton = document.getElementById("microphoneButton");
 
-            document.getElementById("microphoneButton").addEventListener("click", () => {
-                stopRecording();
-            });
+microphoneButton.addEventListener("mousedown", startRecording);
+microphoneButton.addEventListener("mouseup", stopRecording);
+microphoneButton.addEventListener("touchstart", startRecording);
 
-      } else if (result.state === "prompt") {
-            alert("Please allow microphone access.");
-            getMicrophoneAccess();
-      }
-      // Don't do anything if the permission was denied.
-    });
-});
+//Some browsers support with prefixed properties and some don't so added both to be safe.
+const SpeechRecognition =
+  window.SpeechRecognition || window.webkitSpeechRecognition;
+const SpeechRecognitionEvent =
+  window.SpeechRecognitionEvent || window.webkitSpeechRecognitionEvent;
+
+
 
 function getMicrophoneAccess() {
     navigator.mediaDevices
@@ -55,19 +49,68 @@ function getMicrophoneAccess() {
   });
 };
 
-function startRecording() {
-    audioChunks = [];
-    navigator.mediaDevices.getUserMedia({ audio: true })
-        .then(stream => {
-            mediaRecorder = new MediaRecorder(stream);
+async function startRecording() {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    chunks = [];
 
-            mediaRecorder.ondataavailable = e => {
-                audioChunks.push(e.data);
-            };
+    mediaRecorder = new MediaRecorder(stream);
+    mediaRecorder.ondataavailable = e => chunks.push(e.data);
+    mediaRecorder.start();
+    document.getElementById("microphoneIcon").src = "Images/Icons/activeMicrophone.png";
 
-            mediaRecorder.start(); // begin recording
-            console.log("Recording started");
+    console.log("Recording started");
+}
+
+function stopRecording() {
+    if (!mediaRecorder) return;
+
+    mediaRecorder.onstop = () => {
+        const blob = new Blob(chunks, { type: mediaRecorder.mimeType });
+        const url = URL.createObjectURL(blob);
+
+        audio = new Audio(url);
+        audio.play();
+        document.getElementById("microphoneIcon").src = "Images/Icons/microphone.png";
+
+        console.log("Recording stopped");
+    };
+
+    mediaRecorder.stop();
+}
+
+function transcribeAudio(blob) {
+    const recognition = new SpeechRecognition();
+    recognition.continuous = false;
+    recognition.lang = "en-UK";
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
+    recognition.processLocally = true;
+
+      recognition.available({ langs: ["en-UK"], processLocally: true }).then(
+    (result) => {
+      if (result === "unavailable") {
+        diagnostic.textContent = `en-UK is not available to download at this time. Sorry!`;
+      } else if (result === "available") {
+        recognition.start();
+        console.log("Ready to receive a color command.");
+      } else {
+        diagnostic.textContent = `en-UK language pack is downloading...`;
+        SpeechRecognition.install({
+          langs: ["en-UK"],
+          processLocally: true,
+        }).then((result) => {
+          if (result) {
+            diagnostic.textContent = `en-UK language pack downloaded. Start recognition again.`;
+          } else {
+            diagnostic.textContent = `en-UK language pack failed to download. Try again later.`;
+          }
         });
+      }
+    },
+  );
+
+    recognition.start();
+    console.log("Transcribing audio...");
 }
 
 function CreateMessageCard(originalText, translatedText, source)
