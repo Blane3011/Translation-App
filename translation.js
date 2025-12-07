@@ -22,7 +22,13 @@ const SpeechRecognition =
 const SpeechRecognitionEvent =
   window.SpeechRecognitionEvent || window.webkitSpeechRecognitionEvent;
 
+const recognition = new SpeechRecognition();
 
+recognition.continuous = false;
+recognition.lang = "en-GB";
+recognition.interimResults = false;
+recognition.maxAlternatives = 1;
+recognition.processLocally = true;
 
 function getMicrophoneAccess() {
     navigator.mediaDevices
@@ -34,8 +40,7 @@ function getMicrophoneAccess() {
     stream.onremovetrack = () => {
       console.log("Stream ended");
     };
-    audio.srcObject = stream;
-    
+    //audio.srcObject = stream;
   })
   .catch((error) => {
 
@@ -50,67 +55,28 @@ function getMicrophoneAccess() {
 };
 
 async function startRecording() {
-    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-    chunks = [];
 
-    mediaRecorder = new MediaRecorder(stream);
-    mediaRecorder.ondataavailable = e => chunks.push(e.data);
-    mediaRecorder.start();
+   
+
+  recognition.start();
+  console.log("Transcribing audio...");
+    
     document.getElementById("microphoneIcon").src = "Images/Icons/activeMicrophone.png";
-
-    console.log("Recording started");
 }
 
-function stopRecording() {
-    if (!mediaRecorder) return;
-
-    mediaRecorder.onstop = () => {
-        const blob = new Blob(chunks, { type: mediaRecorder.mimeType });
-        const url = URL.createObjectURL(blob);
-
-        audio = new Audio(url);
-        audio.play();
-        document.getElementById("microphoneIcon").src = "Images/Icons/microphone.png";
-
-        console.log("Recording stopped");
-    };
-
-    mediaRecorder.stop();
+function stopRecording()
+{
+  console.log("Stopping transcription.");
+  document.getElementById("microphoneIcon").src = "Images/Icons/microphone.png";
+  recognition.stop();
 }
 
-function transcribeAudio(blob) {
-    const recognition = new SpeechRecognition();
-    recognition.continuous = false;
-    recognition.lang = "en-UK";
-    recognition.interimResults = false;
-    recognition.maxAlternatives = 1;
-    recognition.processLocally = true;
+function transcribeAudio()
+ {
 
-      recognition.available({ langs: ["en-UK"], processLocally: true }).then(
-    (result) => {
-      if (result === "unavailable") {
-        diagnostic.textContent = `en-UK is not available to download at this time. Sorry!`;
-      } else if (result === "available") {
-        recognition.start();
-        console.log("Ready to receive a color command.");
-      } else {
-        diagnostic.textContent = `en-UK language pack is downloading...`;
-        SpeechRecognition.install({
-          langs: ["en-UK"],
-          processLocally: true,
-        }).then((result) => {
-          if (result) {
-            diagnostic.textContent = `en-UK language pack downloaded. Start recognition again.`;
-          } else {
-            diagnostic.textContent = `en-UK language pack failed to download. Try again later.`;
-          }
-        });
-      }
-    },
-  );
 
-    recognition.start();
-    console.log("Transcribing audio...");
+  
+    
 }
 
 function CreateMessageCard(originalText, translatedText, source)
@@ -152,7 +118,6 @@ function CreateMessageCard(originalText, translatedText, source)
 
 function addMessage(originalText, translatedText, source)
 {
-    console.log("Creating message with source:" + source);
   messages.push({ original: originalText, translated: translatedText, source: source });
 }
 
@@ -174,5 +139,31 @@ if(messages.length == 0)
 }
 
 
+recognition.onresult = (event) => {
+  alert("Processing local speech recognition for en-GB");
+  console.log("Speech recognition result received.");
+  SpeechRecognition.available({ langs: ["en-GB"], processLocally: true }).then(
+    (result) => {
+      if (result === "unavailable") {
+        alert("en-GB is not available to download at this time. Sorry!");
+      } else if (result === "available") {
+       //recognition.start();
+      } else {
+        diagnostic.textContent = `en-GB language pack is downloading...`;
+        SpeechRecognition.install({
+          langs: ["en-GB"],
+          processLocally: true,                                          
+        }).then((result) => {
+          if (result) {
+            alert("en-GB language pack downloaded. Start recognition again.");
+          } else {
+             alert("en-GB language pack failed to download. Try again later.");
+          }
+        });
+      }
+    },
+  );
+  console.log(event.result);
 
+};
 
