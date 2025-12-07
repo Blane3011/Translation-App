@@ -9,7 +9,6 @@ body {
     color: white;
     border-radius: 40px;
     text-align: center; 
-    height:75vh;
     min-height: 75vh;
     margin: 0 auto;
 }
@@ -33,3 +32,26 @@ body {
     opacity: 0.9;
 }
 
+.userMessage {
+    background-color: #1E1E1E;
+    border-radius: 20px;
+    text-align: left;
+    color: white;
+    margin-bottom: 15px;
+    max-width: 30%;
+}
+
+
+.otherMessage {
+    background-color: #263238;
+    border-radius: 20px;
+    color: white;
+    text-align: right;
+    margin-bottom: 15px;
+    max-width: 30%;
+}
+
+.card-text
+{
+    color: white;
+}

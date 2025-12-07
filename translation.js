@@ -6,36 +6,30 @@ const constraints =
 
 var recording = false
 var messages = [];
-const mediaRecorder = new MediaRecorder(stream);
-alert("Translation Screen Loaded");
-
-if(messages.length == 0)
-{
-  alert("No messages yet. Start recording to create a message!");
-  document.getElementById("messageBox").innerHTML = "<h4 class='text-center'>No messages yet. Start recording to create a message!</h4>";
-}
+let audioChunks = [];
+//const mediaRecorder = new MediaRecorder(stream);
 
 document.getElementById("microphoneButton").addEventListener("click", () => {
-    navigator.permissions.query({ name: "microphone" }).then((result) => {
-  if (result.state === "granted") {
-        alert("Recording started.");
-        document.getElementById("microphoneIcon").src = "Images/Icons/activeMicrophone.png";
-        startRecording();
-        document.getElementById("microphoneButton").removeEventListener("click", () => {});
+    navigator.permissions.query({ name: "microphone" }).then((result) =>
+    {
+      if (result.state === "granted") {
+            alert("Recording started.");
+            document.getElementById("microphoneIcon").src = "Images/Icons/activeMicrophone.png";
+            startRecording();
+            document.getElementById("microphoneButton").removeEventListener("click", () => {});
 
-        document.getElementById("microphoneButton").addEventListener("click", () => {
-            stopRecording();1
-        });
+            document.getElementById("microphoneButton").addEventListener("click", () => {
+                stopRecording();
+            });
 
-  } else if (result.state === "prompt") {
-        alert("Please allow microphone access.");
-        getMicrophoneAccess();
-  }
-  // Don't do anything if the permission was denied.
+      } else if (result.state === "prompt") {
+            alert("Please allow microphone access.");
+            getMicrophoneAccess();
+      }
+      // Don't do anything if the permission was denied.
+    });
 });
 
-
-});
 function getMicrophoneAccess() {
     navigator.mediaDevices
   .getUserMedia(constraints)
@@ -61,100 +55,80 @@ function getMicrophoneAccess() {
   });
 };
 
-mediaRecorder.onstop = (e) => {
-  console.log("recorder stopped");
+function startRecording() {
+    audioChunks = [];
+    navigator.mediaDevices.getUserMedia({ audio: true })
+        .then(stream => {
+            mediaRecorder = new MediaRecorder(stream);
 
-  const audio = document.createElement("audio");
+            mediaRecorder.ondataavailable = e => {
+                audioChunks.push(e.data);
+            };
 
-  audio.setAttribute("controls", "");
-
-  const blob = new Blob(chunks, { type: "audio/ogg; codecs=opus" });
-  chunks = [];
-  const audioURL = window.URL.createObjectURL(blob);
-  audio.src = audioURL;
-
-  deleteButton.onclick = (e) => {
-    let evtTgt = e.target;
-    evtTgt.parentNode.parentNode.removeChild(evtTgt.parentNode);
-  };
-};
-
-function startRecording()
-{
-    mediaRecorder.start();
-
-    let chunks = [];
-    mediaRecorder.ondataavailable = (e) => {
-        chunks.push(e.data);
-    };
+            mediaRecorder.start(); // begin recording
+            console.log("Recording started");
+        });
 }
 
-function stopRecording()
+function CreateMessageCard(originalText, translatedText, source)
 {
-    mediaRecorder.stop();
-
-}
-
-function setToRecord()
-{
-    document.getElementById("microphoneButton").addEventListener("click", () => {
-    navigator.permissions.query({ name: "microphone" }).then((result) => {
-        if (result.state === "granted") {
-                alert("Recording started.");
-                document.getElementById("microphoneIcon").src = "Images/Icons/activeMicrophone.png";
-                startRecording();
-
-                document.getElementById("microphoneButton").removeEventListener("click", () => {});
-                document.getElementById("microphoneButton").addEventListener("click", () =>
-                {
-                    stopRecording();
-                });
-        } else if (result.state === "prompt")
-            {
-                alert("Please allow microphone access.");
-                getMicrophoneAccess();
-            }
-    });
-    });
-}
-
-function setToStop()
-{
-
-}
-
-function CreateMessageCard(originalText, translatedText)
-{
-  var message = "THIS IS A PLACEHGOLDER MESSAGE";
+  console.log("Creating message card with source:" + source);
   var messageCard = document.createElement("div");
-  messageCard.innt = "messageCard";
 
-}
-
-
- function createCard(title, text, imgUrl) {
-    const col = document.createElement("div");
-    col.className = "col-md-4";
-
-    const card = `
-        <div class="card mb-3">
-            <img src="${imgUrl}" class="card-img-top" alt="${title}">
-            <div class="card-body">
-                <h5 class="card-title">${title}</h5>
-                <p class="card-text">${text}</p>
-                <a href="#" class="btn btn-primary">Learn more</a>
+  switch(source)
+  {
+    case "user": 
+          messageCard.innerHTML = `
+          <div class="d-flex justify-content-start mb-3">
+            <div class="card-body userMessage p-2 p-md-5">
+              <p class="card-text">${originalText}</p>
+              <p class="card-text fst-italic">${translatedText}</p>
+            </div>
+          </div>
+  `;
+    break;
+    
+    case "other":
+        messageCard.innerHTML = `
+        <div class="d-flex justify-content-end mb-3">
+            <div class="card-body otherMessage p-2 p-md-5">
+              <p class="card-text">${originalText}</p>
+              <p class="card-text fst-italic">${translatedText}</p>
             </div>
         </div>
     `;
+    break;  
 
-    col.innerHTML = card;
-    document.getElementById("card-container").appendChild(col);
+    default:
+      alert("Error: Unknown message source.");
+      break;
+  }
+ 
+  document.getElementById("messageBox").appendChild(messageCard); 
 }
 
-// Example usage
-createCard("Dynamic Card", "This card was created with JS.", "https://picsum.photos/300");
+function addMessage(originalText, translatedText, source)
+{
+    console.log("Creating message with source:" + source);
+  messages.push({ original: originalText, translated: translatedText, source: source });
+}
 
+addMessage("Hello", "Hola", "user");  
+addMessage("Goodbye", "Adiós", "user");
+addMessage("Gracias", "Thank you", "other");
+addMessage("Gracias", "Thank you", "other");
+addMessage("Gracias", "Thank you", "other");
+addMessage("Gracias", "Thank you", "other");
 
+console.log("Messages array:", messages);
+  for (let i = 0; i < messages.length; i++) {
+    CreateMessageCard(messages[i].original, messages[i].translated, messages[i].source);
+  }
+  
+if(messages.length == 0)
+{
+  document.getElementById("messageBox").innerHTML = "<h4 class='text-center'>No messages yet. Start recording to create a message!</h4>";
+}
 
 
 
