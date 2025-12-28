@@ -1,15 +1,34 @@
-var express = require("express");
-var path = require("path");
+import express from "express";
+import fetch from "node-fetch";
+import cors from "cors";
 
-var app = express();
-var PORT = 8080;
 
-app.use(express.static(path.join(__dirname, "public")));
+API_Key = "1_YbsRg5HZBg2yXDF5Y7C0PCaey";
+API_URL = "https://smartcat.ai/api/integration/v1/translate/text"
+API_User = "de98bb98-4f83-44e7-9b40-3366d61f8a82"
 
-app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "public", "index.html"));
-})
+const app = express();
+app.use(cors());
+app.use(express.json());
 
-app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
+app.post("/translate", async (req, res) => {
+  const { text, target } = req.body;
+
+  const response = await fetch("https://smartcat.ai/api/integration/v1/translate/text", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": "Basic " + Buffer.from(API_User + ":" + API_Key).toString("base64")
+    },
+    body: JSON.stringify({
+      texts: text,
+      targetLanguages: target,
+      sourceLanguage: "en"
+    })
+  });
+
+  const data = await response.json();
+  res.json(data);
 });
+
+app.listen(3000, () => console.log("Server running on port 3000"));

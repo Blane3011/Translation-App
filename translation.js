@@ -1,20 +1,12 @@
-const constraints =
-{
-  audio: true,
-  video: false,
-};
-
+API_Key = "1_YbsRg5HZBg2yXDF5Y7C0PCaey";
+API_URL = "https://smartcat.ai/api/integration/v1/translate/text"
+API_User = "de98bb98-4f83-44e7-9b40-3366d61f8a82"
 
 var recording = false
 var messages = [];
 let audioChunks = [];
 
 var microphoneButton = document.getElementById("microphoneButton");
-
-microphoneButton.addEventListener("mousedown", startRecording);
-microphoneButton.addEventListener("touchend", stopRecording);
-microphoneButton.addEventListener("mouseup", stopRecording);
-microphoneButton.addEventListener("touchstart", startRecording);
 
 //Some browsers support with prefixed properties and some don't so added both to be safe.
 const SpeechRecognition =
@@ -24,11 +16,16 @@ const SpeechRecognitionEvent =
 
 const recognition = new SpeechRecognition();
 
+if(!SpeechRecognition)
+{
+  alert("Sorry, your browser does not support the Web Speech API. Please try using Google Chrome or Microsoft Edge.");
+}
+
 recognition.continuous = false;
 recognition.lang = "en-GB";
 recognition.interimResults = false;
 recognition.maxAlternatives = 1;
-recognition.processLocally = true;
+//recognition.processLocally = true;
 
 async function startRecording(event) {
   event.preventDefault();
@@ -45,14 +42,22 @@ function stopRecording()
   recognition.stop();
 }
 
-function transcribeAudio()
- {
+ recognition.onstart = () => console.log("recognition started");
+  recognition.onend = () => console.log("recognition ended");
+  recognition.onerror = (e) => console.error("recognition error", e);
+  recognition.onresult = (event) => {
+    const transcript = event.results[0][0].transcript;
+    console.log("Transcript:", transcript);
+    // e.g. CreateMessageCard(transcript, "...", "user");
+  };
 
-
-  
-    
-}
-
+  document.getElementById("microphoneButton").addEventListener("click", () => {
+    try {
+      recognition.start(); // will trigger permission prompt if needed
+    } catch (e) {
+      console.warn("Could not start recognition:", e);
+    }
+  });
 function CreateMessageCard(originalText, translatedText, source)
 {
   console.log("Creating message card with source:" + source);
@@ -114,7 +119,32 @@ if(messages.length == 0)
 
 recognition.onresult = function(event){
   alert("Processing local speech recognition for en-GB");
-  console.log("Speech recognition result received.");
-  
-  console.log(event.results);
+  console.log("Transcription:"  + event.results[0][0].transcript);
+  alert("Translated to Spanish: " + translateText(event.results[0][0].transcript, "es"));
 };
+
+
+async function translateText(text, targetLanguage = "es")
+ {
+   const body = {
+    texts: text,
+    targetLanguages: targetLanguage,
+    sourceLanguage: "en"
+  };
+
+  const response = await fetch(API_URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": "Basic " + btoa(API_User + ":" + API_Key)
+    },
+    body: JSON.stringify(body)
+  });
+
+  if (!response.ok) {
+    throw new Error("Smartcat API error: " + response.status);
+  }
+
+  const data = await response.json();
+  return data.translation || data.translatedText || data;
+ }
