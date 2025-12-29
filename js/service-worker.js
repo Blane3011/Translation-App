@@ -1,4 +1,4 @@
-const cacheName = 'translation-cache V2"';
+const cacheName = 'translation-cache v2';
 var assets = [
     '/',
     'index.html',
@@ -31,7 +31,7 @@ var assets = [
 self.addEventListener("install", (event) => {
     event.waitUntil(
         caches.open(cacheName).then((cache) => {
-            return cache.addAll([assets]);
+            return cache.addAll(assets);
         })
     );
 });
@@ -41,7 +41,7 @@ self.addEventListener('activate', event => {
     caches.keys().then(keys =>
       Promise.all(
         keys.map(key => {
-          if (key !== CACHE_NAME) {
+          if (key !== cacheName) {
             return caches.delete(key);
           }
         })
