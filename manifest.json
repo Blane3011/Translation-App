@@ -4,15 +4,15 @@
   "short_name": "AI Translator",
   "id": "/Translation-App/",
   "description": "A translator powered using AI APIs.",
-  "start_url": "/Translation-App/index.html",
+  "start_url": "index.html",
   "background_color": "#121212",
   "theme_color": "#B0BEC5",
   "orientation": "portrait",
   "display": "standalone",
-  "scope": "./",
+  "scope": "/Translation-App/",
   "icons": [
       {
-          "src": "./Images/LynxLogo.png",
+          "src": "/images/LynxLogo.png",
           "sizes": "48x48 72x72 96x96 128x128 152x152 192x192 384x384 256x256 512x512",
           "type": "image/png"
       }
