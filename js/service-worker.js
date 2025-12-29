@@ -1,10 +1,10 @@
-const cacheName = 'translation-cache';
+const cacheName = 'translation-cache V2"';
 var assets = [
     '/',
     '/index.html',
-    "/Pages/translationScreen.html",
-    "/Pages/languageSelectionScreen.html",
-    "/Pages/SavedConversationsScreen.html",
+    "/pages/translationScreen.html",
+    "/pages/languageSelectionScreen.html",
+    "/pages/savedConversationsScreen.html",
 
     '/css/style.css',
     '/css/bootstrap.min.css',
@@ -13,17 +13,19 @@ var assets = [
     '/js/translation.js',
     '/js/bootstrap.bundle.min.js',
 
-    'Images/Icons/activeMicrophone.png',
-    'Images/Icons/bin.png',
-    'Images/Icons/chat.png',
-    'Images/Icons/error.png',
-    'Images/Icons/globe.png',
-    'Images/Icons/home.png',
-    'Images/Icons/microphone.png',
-    'Images/Icons/save.png',
-    'Images/Spain.png',
-    'Images/text.png',
-    'Images/united-kingdom.png'
+    'images/LynxLogo.png',
+    'images/icons/activeMicrophone.png',
+    'images/icons/bin.png',
+    'images/icons/chat.png',
+    'images/icons/error.png',
+    'images/icons/globe.png',
+    'images/icons/home.png',
+    'images/icons/microphone.png',
+    'images/icons/save.png',
+    'images/icons/Spain.png',
+    'images/icons/text.png',
+    'images/icons/united-kingdom.png'
+
 ];
 
 self.addEventListener("install", (event) => {
@@ -32,6 +34,20 @@ self.addEventListener("install", (event) => {
             return cache.addAll([assets]);
         })
     );
+});
+
+self.addEventListener('activate', event => {
+  event.waitUntil(
+    caches.keys().then(keys =>
+      Promise.all(
+        keys.map(key => {
+          if (key !== CACHE_NAME) {
+            return caches.delete(key);
+          }
+        })
+      )
+    )
+  );
 });
  
 self.addEventListener('fetch', event => {
