@@ -1,3 +1,5 @@
+import send = require("send");
+
 API_Key = "1_YbsRg5HZBg2yXDF5Y7C0PCaey";
 API_URL = "https://smartcat.ai/api/integration/v1/translate/text"
 API_User = "de98bb98-4f83-44e7-9b40-3366d61f8a82"
@@ -64,6 +66,16 @@ function stopRecording()
       console.warn("Could not start recognition:", e);
     }
   });
+
+  document.getElementById("languageButton").addEventListener("click", () => {
+    try {
+     sendErrorNotification();
+    } catch (e) {
+      console.warn("Could not send error:", e);
+    }
+  });
+
+
 function CreateMessageCard(originalText, translatedText, source)
 {
   console.log("Creating message card with source:" + source);
