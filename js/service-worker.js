@@ -21,10 +21,10 @@ var assets = [
     "/Pages/languageSelectionScreen.html",
     "/Pages/SavedConversationsScreen.html",
 
-    '/style.css',
+    '/css/style.css',
 
-    '/app.js',
-    '/translation.js',
+    '/js/app.js',
+    '/js/translation.js',
 
     'Images/Icons/activeMicrophone.png',
     'Images/Icons/bin.png',

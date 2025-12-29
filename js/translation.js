@@ -39,13 +39,13 @@ async function startRecording(event) {
   recognition.start();
   console.log("Transcribing audio...");
     
-  document.getElementById("microphoneIcon").src = "Images/Icons/activeMicrophone.png";
+  document.getElementById("microphoneIcon").src = "/Images/Icons/activeMicrophone.png";
 }
 
 function stopRecording()
 {
   console.log("Stopping transcription.");
-  document.getElementById("microphoneIcon").src = "Images/Icons/microphone.png";
+  document.getElementById("microphoneIcon").src = "/Images/Icons/microphone.png";
   recognition.stop();
 }
 
