@@ -131,7 +131,6 @@ recognition.onresult = function(event){
   alert("Translated to Spanish: " + translateText(event.results[0][0].transcript, "es"));
 };
 
-
 async function translateText(text, targetLanguage = "es")
  {
    const body = {
@@ -173,4 +172,6 @@ fetch('https://api.onesignal.com/notifications?c=push', options)
   .then(res => res.json())
   .then(res => console.log(res))
   .catch(err => console.error(err));
+
+  console.log("Notification sent.");
  }   // OneSignal code to send a notification

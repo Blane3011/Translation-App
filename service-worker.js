@@ -22,19 +22,19 @@ var assets = [
     "/SavedConversationsScreen.html",
 
     '/style.css',
-    
+
     '/app.js',
     '/translation.js',
 
-    'activeMicrophone.png',
-    'bin.png',
-    'chat.png',
-    'error.png',
-    'globe.png',
-    'home.png',
-    'microphone.png',
-    'save.png',
-    'Spain.png',
-    'text.png',
-    'united-kingdom.png'
+    'Images/Icons/activeMicrophone.png',
+    'Images/Icons/bin.png',
+    'Images/Icons/chat.png',
+    'Images/Icons/error.png',
+    'Images/Icons/globe.png',
+    'Images/Icons/home.png',
+    'Images/Icons/microphone.png',
+    'Images/Icons/save.png',
+    'Images/Spain.png',
+    'Images/text.png',
+    'Images/united-kingdom.png'
 ];
