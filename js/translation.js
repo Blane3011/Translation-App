@@ -1,4 +1,3 @@
-import send = require("send");
 
 API_Key = "1_YbsRg5HZBg2yXDF5Y7C0PCaey";
 API_URL = "https://smartcat.ai/api/integration/v1/translate/text"
