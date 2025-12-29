@@ -20,7 +20,21 @@ var assets = [
     "/translationScreen.html",
     "/languageSelectionScreen.html",
     "/SavedConversationsScreen.html",
+
     '/style.css',
+    
     '/app.js',
     '/translation.js',
+
+    'activeMicrophone.png',
+    'bin.png',
+    'chat.png',
+    'error.png',
+    'globe.png',
+    'home.png',
+    'microphone.png',
+    'save.png',
+    'Spain.png',
+    'text.png',
+    'united-kingdom.png'
 ];

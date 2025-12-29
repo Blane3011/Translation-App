@@ -2,6 +2,7 @@ import express from "express";
 import fetch from "node-fetch";
 import cors from "cors";
 
+const PORT = 3000;
 
 API_Key = "1_YbsRg5HZBg2yXDF5Y7C0PCaey";
 API_URL = "https://smartcat.ai/api/integration/v1/translate/text"
@@ -31,4 +32,4 @@ app.post("/translate", async (req, res) => {
   res.json(data);
 });
 
-app.listen(3000, () => console.log("Server running on port 3000"));
+app.listen(PORT, () => console.log("Server running on port 3000"));
