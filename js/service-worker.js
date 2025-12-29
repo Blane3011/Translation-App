@@ -1,27 +1,7 @@
-self.addEventListener("install", (event) => {
-    event.waitUntil(
-        caches.open("translation-cache").then((cache) => {
-            return cache.addAll([assets]);
-        })
-    );
-});
- 
-self.addEventListener("fetch", event => {
-  if (event.request.mode === "navigate") {
-    event.respondWith(fetch(event.request));
-    return;
-  }
-
-  event.respondWith(
-    caches.match(event.request).then(response => {
-      return response || fetch(event.request);
-    })
-  );
-  });
-
+const cacheName = 'translation-cache';
 var assets = [
     '/',
-    '/Pages/index.html',
+    '/index.html',
     "/Pages/translationScreen.html",
     "/Pages/languageSelectionScreen.html",
     "/Pages/SavedConversationsScreen.html",
@@ -45,3 +25,19 @@ var assets = [
     'Images/text.png',
     'Images/united-kingdom.png'
 ];
+
+self.addEventListener("install", (event) => {
+    event.waitUntil(
+        caches.open(cacheName).then((cache) => {
+            return cache.addAll([assets]);
+        })
+    );
+});
+ 
+self.addEventListener('fetch', event => {
+  event.respondWith(
+    caches.match(event.request).then(response => {
+      return response || fetch(event.request);
+    })
+  );
+});
