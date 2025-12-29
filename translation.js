@@ -2,7 +2,7 @@ API_Key = "1_YbsRg5HZBg2yXDF5Y7C0PCaey";
 API_URL = "https://smartcat.ai/api/integration/v1/translate/text"
 API_User = "de98bb98-4f83-44e7-9b40-3366d61f8a82"
 
-ONESIGNAL_API_KEY = process.env.ONESIGNAL_API_KEY;
+ONESIGNAL_API_KEY = "Key".concat(" ", process.env.ONESIGNAL_API_KEY);
 ONESIGNAL_APP_ID = process.env.APP_ID;
 
 console.log("API Key:", API_Key);
@@ -113,6 +113,8 @@ addMessage("Gracias", "Thank you", "other");
 addMessage("Gracias", "Thank you", "other");
 addMessage("Gracias", "Thank you", "other");
 
+sendErrorNotification();
+
 console.log("Messages array:", messages);
   for (let i = 0; i < messages.length; i++) {
     CreateMessageCard(messages[i].original, messages[i].translated, messages[i].source);
@@ -158,81 +160,12 @@ async function translateText(text, targetLanguage = "es")
  async function sendErrorNotification(){
   const options = {
     method: 'POST',
-    headers: {Authorization: , 'Content-Type': 'application/json'},
+    headers: {Authorization: ONESIGNAL_API_KEY, 'Content-Type': 'application/json'},
     body: JSON.stringify({
-      app_id: process.env.App_ID,
-      contents: {en: 'Default message.'},
-      include_aliases: {external_id: ['<string>']},
+      app_id: ONESIGNAL_APP_ID,
+      contents: {en: 'This feature is not yet implemented.'},
       target_channel: 'push',
-      include_subscription_ids: ['<string>'],
-      included_segments: ['<string>'],
-      excluded_segments: ['<string>'],
-      filters: [{field: 'tag', relation: '=', key: '<string>', value: '<string>'}],
-      headings: {en: '<string>'},
-      subtitle: {en: '<string>'},
-      name: '<string>',
-      template_id: '<string>',
-      custom_data: {},
-      ios_attachments: {id: '<string>'},
-      big_picture: '<string>',
-      huawei_big_picture: '<string>',
-      adm_big_picture: '<string>',
-      chrome_web_image: '<string>',
-      small_icon: '<string>',
-      huawei_small_icon: '<string>',
-      adm_small_icon: '<string>',
-      large_icon: '<string>',
-      huawei_large_icon: '<string>',
-      adm_large_icon: '<string>',
-      chrome_web_icon: '<string>',
-      firefox_icon: '<string>',
-      chrome_web_badge: '<string>',
-      android_channel_id: '<string>',
-      existing_android_channel_id: '<string>',
-      huawei_channel_id: '<string>',
-      huawei_existing_channel_id: '<string>',
-      huawei_category: 'MARKETING',
-      huawei_msg_type: 'message',
-      huawei_bi_tag: '<string>',
-      priority: 10,
-      ios_interruption_level: 'active',
-      ios_sound: '<string>',
-      ios_badgeType: 'None',
-      ios_badgeCount: 123,
-      android_accent_color: '<string>',
-      huawei_accent_color: '<string>',
-      url: '<string>',
-      app_url: '<string>',
-      web_url: '<string>',
-      target_content_identifier: '<string>',
-      buttons: [{id: '<string>', text: '<string>', icon: '<string>'}],
-      web_buttons: [{id: '<string>', text: '<string>', url: '<string>'}],
-      thread_id: '<string>',
-      ios_relevance_score: 123,
-      android_group: '<string>',
-      adm_group: '<string>',
-      ttl: 259200,
-      collapse_id: '<string>',
-      web_push_topic: '<string>',
-      data: {},
-      content_available: true,
-      ios_category: '<string>',
-      apns_push_type_override: '<string>',
-      isIos: true,
-      isAndroid: true,
-      isHuawei: true,
-      isAnyWeb: true,
-      isChromeWeb: true,
-      isFirefox: true,
-      isSafari: true,
-      isWP_WNS: true,
-      isAdm: true,
-      send_after: '<string>',
-      delayed_option: '<string>',
-      delivery_time_of_day: '<string>',
-      throttle_rate_per_minute: 123,
-      enable_frequency_cap: true,
-      idempotency_key: '<string>'
+      template_id: '83e7abb0-1572-4a9d-a5eb-f0c970ea29a7'
     })
 };
 
@@ -240,6 +173,4 @@ fetch('https://api.onesignal.com/notifications?c=push', options)
   .then(res => res.json())
   .then(res => console.log(res))
   .catch(err => console.error(err));
-
-
  }   // OneSignal code to send a notification
