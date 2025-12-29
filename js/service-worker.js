@@ -1,4 +1,4 @@
-const cacheName = 'translation-cache v2';
+const cacheName = 'translation_cache';
 var assets = [
     '/',
     'index.html',
@@ -25,7 +25,6 @@ var assets = [
     'images/icons/Spain.png',
     'images/icons/text.png',
     'images/icons/united-kingdom.png'
-
 ];
 
 self.addEventListener("install", (event) => {
