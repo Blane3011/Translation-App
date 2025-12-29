@@ -1,17 +1,17 @@
 const cacheName = 'translation-cache V2"';
 var assets = [
     '/',
-    '/index.html',
-    "/pages/translationScreen.html",
-    "/pages/languageSelectionScreen.html",
-    "/pages/savedConversationsScreen.html",
+    'index.html',
+    "pages/translationScreen.html",
+    "pages/languageSelectionScreen.html",
+    "pages/savedConversationsScreen.html",
 
-    '/css/style.css',
-    '/css/bootstrap.min.css',
+    'css/style.css',
+    'css/bootstrap.min.css',
 
-    '/js/app.js',
-    '/js/translation.js',
-    '/js/bootstrap.bundle.min.js',
+    'js/app.js',
+    'js/translation.js',
+    'js/bootstrap.bundle.min.js',
 
     'images/LynxLogo.png',
     'images/icons/activeMicrophone.png',
