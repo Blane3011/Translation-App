@@ -27,9 +27,11 @@ var assets = [
     "/Pages/SavedConversationsScreen.html",
 
     '/css/style.css',
+    '/css/bootstrap.min.css',
 
     '/js/app.js',
     '/js/translation.js',
+    '/js/bootstrap.bundle.min.js',
 
     'Images/Icons/activeMicrophone.png',
     'Images/Icons/bin.png',
