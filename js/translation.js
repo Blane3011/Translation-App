@@ -9,6 +9,8 @@ ONESIGNAL_APP_ID = process.env.APP_ID;
 console.log("API Key:", API_Key);
 console.log("API User:", API_User);
 
+alert("Translation script loaded.");
+
 var recording = false
 var messages = [];
 let audioChunks = [];
