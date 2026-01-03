@@ -27,6 +27,7 @@ if(!SpeechRecognition)
 else
 {
   const recognition = new SpeechRecognition();
+  console.log("Recognition object initialized.");
 }
 
 recognition.continuous = false;
