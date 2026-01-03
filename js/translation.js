@@ -81,7 +81,6 @@ function CreateMessageCard(originalText, translatedText, source)
 {
   console.log("Creating message card with source:" + source);
   var messageCard = document.createElement("div");
-
   switch(source)
   {
     case "user": 
@@ -94,7 +93,7 @@ function CreateMessageCard(originalText, translatedText, source)
           </div>
   `;
     break;
-    
+
     case "other":
         messageCard.innerHTML = `
         <div class="d-flex justify-content-end mb-3">
@@ -143,6 +142,12 @@ async function testTranslationAPI()
 testTranslationAPI();
 
 sendErrorNotification();
+
+//Clears all of the current messages in the message box to prevent duplicates when reloading.
+while(document.getElementById("messageBox").firstChild)
+{
+  document.getElementById("messageBox").removeChild(document.getElementById("messageBox").lastChild);
+}
 
 console.log("Messages array:", messages);
   for (let i = 0; i < messages.length; i++) {
