@@ -14,7 +14,7 @@ let audioChunks = [];
 
 var microphoneButton = document.getElementById("microphoneButton");
 //Created null variable as is assigned later if browser supports SpeechRecognition.
-const recognition = null;
+var recognition = null;
 
 //Some browsers support with prefixed properties and some don't so added both to be safe.
 const SpeechRecognition =
