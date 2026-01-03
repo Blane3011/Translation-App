@@ -142,7 +142,8 @@ async function testTranslationAPI()
     body: JSON.stringify({
       q: "Hello! Where is the library?",
       source: "en",
-      target: "es"
+      target: "es",
+      format: "text"
     }),
     headers: { "Content-Type": "application/json" },
   });
