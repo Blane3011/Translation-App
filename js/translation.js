@@ -126,6 +126,7 @@ addMessage("Gracias", "Thank you", "other");
 addMessage("Gracias", "Thank you", "other");
 addMessage("Gracias", "Thank you", "other");
 
+async function testTranslationAPI() {
 const res = await fetch("https://libretranslate.com/translate", {
   method: "POST",
   body: JSON.stringify({
@@ -138,6 +139,12 @@ const res = await fetch("https://libretranslate.com/translate", {
 });
 
 console.log(await res.json());
+};
+
+testTranslationAPI();
+
+
+
 
 sendErrorNotification();
 
