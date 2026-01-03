@@ -24,11 +24,15 @@ if(!SpeechRecognition)
 {
   alert("Sorry, your browser does not support the Web Speech API. Please try using Google Chrome or Microsoft Edge.");
 }
+else
+{
+  const recognition = new SpeechRecognition();
+}
 
-SpeechRecognition.continuous = false;
-SpeechRecognition.lang = "en-GB";
-SpeechRecognition.interimResults = false;
-SpeechRecognition.maxAlternatives = 1;
+recognition.continuous = false;
+recognition.lang = "en-GB";
+recognition.interimResults = false;
+recognition.maxAlternatives = 1;
 //recognition.processLocally = true;
 
 async function startRecording(event) {
