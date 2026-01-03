@@ -30,11 +30,19 @@ else
   console.log("Recognition object initialized.");
 }
 
-recognition.continuous = false;
-recognition.lang = "en-GB";
-recognition.interimResults = false;
-recognition.maxAlternatives = 1;
-//recognition.processLocally = true;
+if(!recognition)
+{
+  alert("Speech recognition could not be initialized.");
+}
+else
+{
+  recognition.continuous = false;
+  recognition.lang = "en-GB";
+  recognition.interimResults = false;
+  recognition.maxAlternatives = 1;
+  //recognition.processLocally = true;
+}
+
 
 async function startRecording(event) {
   event.preventDefault();
