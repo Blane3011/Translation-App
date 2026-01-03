@@ -137,7 +137,7 @@ addMessage("Gracias", "Thank you", "other");
 
 async function testTranslationAPI() 
 {
-  const res = await fetch("https://libretranslate.com/translate", {
+  const res = await fetch("https://libretranslate-server-qbhi.onrender.com/translate", {
     method: "POST",
     body: JSON.stringify({
       q: "Hello! Where is the library?",
