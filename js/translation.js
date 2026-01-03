@@ -1,7 +1,4 @@
 
-//API_Key = "1_YbsRg5HZBg2yXDF5Y7C0PCaey";
-//API_URL = "https://smartcat.ai/api/integration/v1/translate/text"
-//API_User = "de98bb98-4f83-44e7-9b40-3366d61f8a82"
 
 //ONESIGNAL_API_KEY = "Key".concat(" ", process.env.ONESIGNAL_API_KEY);
 //ONESIGNAL_APP_ID = process.env.APP_ID;
@@ -152,7 +149,6 @@ async function translateText(text)
   return await res.json();
 };
 
-testTranslationAPI();
 sendErrorNotification();
 
 //Clears all of the current messages in the message box to prevent duplicates when reloading.
