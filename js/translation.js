@@ -6,9 +6,6 @@
 //ONESIGNAL_API_KEY = "Key".concat(" ", process.env.ONESIGNAL_API_KEY);
 //ONESIGNAL_APP_ID = process.env.APP_ID;
 
-console.log("API Key:", API_Key);
-console.log("API User:", API_User);
-
 alert("Translation script loaded.");
 
 var recording = false
@@ -126,25 +123,21 @@ addMessage("Gracias", "Thank you", "other");
 addMessage("Gracias", "Thank you", "other");
 addMessage("Gracias", "Thank you", "other");
 
-async function testTranslationAPI() {
-const res = await fetch("https://libretranslate.com/translate", {
-  method: "POST",
-  body: JSON.stringify({
-    q: "Hello! Where is the library?",
-    source: "en",
-    target: "es",
-    api_key: "xxxxxx" // can be optional with self-hosting
-  }),
-  headers: { "Content-Type": "application/json" },
-});
-
-console.log(await res.json());
+async function testTranslationAPI() 
+{
+  const res = await fetch("https://libretranslate.com/translate", {
+    method: "POST",
+    body: JSON.stringify({
+      q: "Hello! Where is the library?",
+      source: "en",
+      target: "es"
+    }),
+    headers: { "Content-Type": "application/json" },
+  });
+  console.log(await res.json());
 };
 
 testTranslationAPI();
-
-
-
 
 sendErrorNotification();
 
