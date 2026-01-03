@@ -87,9 +87,11 @@ function stopRecording()
   });
 
 
-function CreateMessageCard(originalText, translatedText, source)
+async function CreateMessageCard(originalText, source)
 {
   console.log("Creating message card with source:" + source);
+
+  const translatedText = await translateText(originalText, "es");
   var messageCard = document.createElement("div");
   switch(source)
   {
@@ -123,35 +125,34 @@ function CreateMessageCard(originalText, translatedText, source)
   document.getElementById("messageBox").appendChild(messageCard); 
 }
 
-function addMessage(originalText, translatedText, source)
+function addMessage(originalText, source)
 {
-  messages.push({ original: originalText, translated: translatedText, source: source });
+  messages.push({ original: originalText, source: source });
 }
 
-addMessage("Hello", "Hola", "user");  
-addMessage("Goodbye", "Adiós", "user");
-addMessage("Gracias", "Thank you", "other");
-addMessage("Gracias", "Thank you", "other");
-addMessage("Gracias", "Thank you", "other");
-addMessage("Gracias", "Thank you", "other");
+addMessage("Hello", "user");  
+addMessage("Goodbye", "user");
+addMessage("Gracias", "other");
+addMessage("Gracias", "other");
+addMessage("Gracias",  "other");
+addMessage("Gracias", "other");
 
-async function testTranslationAPI() 
+async function translateText(text) 
 {
   const res = await fetch("https://libretranslate-server-qbhi.onrender.com/translate", {
     method: "POST",
     body: JSON.stringify({
-      q: "Hello! Where is the library?",
+      q: text,
       source: "en",
       target: "es",
       format: "text"
     }),
     headers: { "Content-Type": "application/json" },
   });
-  console.log(await res.json());
+  return await res.json();
 };
 
 testTranslationAPI();
-
 sendErrorNotification();
 
 //Clears all of the current messages in the message box to prevent duplicates when reloading.
@@ -220,3 +221,4 @@ fetch('https://api.onesignal.com/notifications?c=push', options)
 
   console.log("Notification sent.");
  }   // OneSignal code to send a notification
+
