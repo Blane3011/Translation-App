@@ -1,4 +1,4 @@
-const CACHE_NAME = 'TRANSLATION_CACHE_V10';
+const CACHE_NAME = 'TRANSLATION_CACHE_V11';
 var assets = [
     '/',
     'index.html',
