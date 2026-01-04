@@ -17,18 +17,19 @@ const ONESIGNAL_APP_ID = process.env.APP_ID;
 // CORS - only allows requests from the PWA domain
 const allowedOrigins = ["https://blane3011.github.io"];
 
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "https://blane3011.github.io");
-  res.setHeader("Access-Control-Allow-Methods", "GET,POST,OPTIONS");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type,Authorization");
-
-  if (req.method === "OPTIONS") {
-    return res.sendStatus(200); // respond to preflight immediately
-  }
-
-  next();
-});
-
+app.use(cors({
+  origin: function(origin, callback) {
+    // Allow requests with no origin (e.g., curl, mobile apps)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    } else {
+      return callback(new Error("Not allowed by CORS"));
+    }
+  },
+  methods: ["GET", "POST", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"]
+}));
 //Route 1: Send OneSignal notification to alert user feature is not implemented
 app.post("/api/send-notification", async (req, res) => {
   const { message } = req.body;
