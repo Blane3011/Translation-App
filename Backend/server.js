@@ -18,24 +18,18 @@ const ONESIGNAL_APP_ID = process.env.APP_ID;
 const allowedOrigins = ["https://blane3011.github.io"];
 
 app.use((req, res, next) => {
-  const origin = req.headers.origin;
-  if (allowedOrigins.includes(origin)) {
-    res.setHeader("Access-Control-Allow-Origin", origin);
-  }
-
+  res.setHeader("Access-Control-Allow-Origin", "https://blane3011.github.io");
   res.setHeader("Access-Control-Allow-Methods", "GET,POST,OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type,Authorization");
 
-  // Handle preflight OPTIONS request
   if (req.method === "OPTIONS") {
-    return res.sendStatus(200);
+    return res.sendStatus(200); // respond to preflight immediately
   }
 
   next();
 });
 
-
-//Route 2: Send OneSignal notification to alert user feature is not implemented
+//Route 1: Send OneSignal notification to alert user feature is not implemented
 app.post("/api/send-notification", async (req, res) => {
   const { message } = req.body;
 
