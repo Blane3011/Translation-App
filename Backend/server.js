@@ -47,20 +47,26 @@ app.post("/api/send-notification", async (req, res) => {
 
 
 app.post("/api/translate", async (req, res) => {
-  try {
-    const response = await fetch("https://libretranslate-server-qbhi.onrender.com/translate", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(req.body)
-    });
+  console.log("Incoming body:", req.body);
 
-    const data = await response.json();
-    res.json(data);
+  try {
+    const response = await fetch(
+      "https://libretranslate-server-qbhi.onrender.com/translate",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(req.body)
+      }
+    );
+
+    console.log("LibreTranslate status:", response.status);
+
+    const text = await response.text(); // IMPORTANT
+    console.log("LibreTranslate raw response:", text);
+
+    res.json(JSON.parse(text));
   } catch (err) {
+    console.error("TRANSLATE ERROR:", err);
     res.status(500).json({ error: err.message });
   }
-});
-// ===== Start server =====
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
 });
