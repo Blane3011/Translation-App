@@ -175,7 +175,7 @@ recognition.onresult = function(event){
 };
 
 async function sendErrorNotification(){
-  const response = await fetch("https://your-render-service.onrender.com/api/send-notification", {
+  const response = await fetch("https://translation-app-7o5f.onrender.com/api/send-notification", {
     method: "POST",
     headers: { "Content-Type": "application/json" }
   });
