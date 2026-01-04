@@ -26,6 +26,13 @@ app.use(cors({
   }
 }));
 
+app.options("*", (req, res) => {
+  res.setHeader("Access-Control-Allow-Origin", "https://blane3011.github.io");
+  res.setHeader("Access-Control-Allow-Methods", "GET,POST,OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type,Authorization");
+  res.sendStatus(200);
+});
+
 //Route 1: Get API Keys
 app.get("/API/GETKEYS", async (req, res) => {
   try {
@@ -62,12 +69,13 @@ app.post("/api/send-notification", async (req, res) => {
       },
       body: JSON.stringify({
         app_id: ONESIGNAL_APP_ID,
-        template_id: "83e7abb0-1572-4a9d-a5eb-f0c970ea29a7", // Your template ID
+        template_id: "83e7abb0-1572-4a9d-a5eb-f0c970ea29a7",
         included_segments: ["All"]
       })
     });
 
     const data = await response.json();
+    res.setHeader("Access-Control-Allow-Origin", "https://blane3011.github.io");
     res.json(data);
   } catch (error) {
     res.status(500).json({ error: error.message });
