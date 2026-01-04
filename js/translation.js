@@ -133,9 +133,10 @@ addMessage("Gracias",  "other");
 addMessage("Gracias", "other");
 
 async function translateText(text) {
-  const res = await fetch(
-    "https://translation-app-7o5f.onrender.com/api/translate",
-    {
+  try {
+    if(!text)
+      throw new Error("Text is empty!");  
+    const res = await fetch("https://translation-app-7o5f.onrender.com/api/translate", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -144,10 +145,19 @@ async function translateText(text) {
         target: "es",
         format: "text"
       })
-    }
-  );
+    });
 
-  return await res.json();
+    if (!res.ok) {
+      const errorText = await res.text();
+      throw new Error(`Server responded with ${res.status}: ${errorText}`);
+    }
+
+    const data = await res.json();
+    return data.translatedText;
+  } catch (err) {
+    console.error("Translation failed:", err);
+    throw err;
+  }
 }
 
 sendErrorNotification();
