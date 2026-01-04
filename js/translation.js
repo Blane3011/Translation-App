@@ -134,9 +134,49 @@ addMessage("Gracias", "other");
 
 async function translateText(text) {
   try {
-    if(!text)
-      throw new Error("Text is empty!");  
     const res = await fetch("https://translation-app-7o5f.onrender.com/api/translate", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        q: text,
+        source: "en",
+        target: "es",
+        format: "text"
+      })
+    });
+
+    const contentType = res.headers.get("content-type");
+
+    if (!res.ok) {
+      // Try to get the error text even if it's HTML
+      const errorText = await res.text();
+      throw new Error(`Server responded with ${res.status}: ${errorText}`);
+    }
+
+    if (contentType && contentType.includes("application/json")) {
+      const data = await res.json();
+      return data.translatedText;
+    } else {
+      const textData = await res.text();
+      throw new Error(`Expected JSON but got: ${textData}`);
+    }
+
+  } catch (err) {
+    console.error("Translation failed:", err);
+    throw err;
+  }
+}
+
+sendErrorNotification();
+
+
+
+
+
+
+async function translatestText(text) {
+  try {
+    const res = await fetch("https://libretranslate.com/translate", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -153,14 +193,40 @@ async function translateText(text) {
     }
 
     const data = await res.json();
-    return data.translatedText;
+    return data.translatedText; // only the translated text
   } catch (err) {
     console.error("Translation failed:", err);
     throw err;
   }
 }
 
-sendErrorNotification();
+// Example usage:
+translatetestText("Hello world")
+  .then(translated => console.log(translated)) // Output: "Hola Mundo"
+  .catch(err => console.error(err));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //Clears all of the current messages in the message box to prevent duplicates when reloading.
 while(document.getElementById("messageBox").firstChild)
