@@ -16,21 +16,22 @@ const ONESIGNAL_APP_ID = process.env.APP_ID;
 
 // CORS - only allows requests from the PWA domain
 const allowedOrigins = ["https://blane3011.github.io"];
-app.use(cors({
-  origin: function(origin, callback) {
-    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  }
-}));
 
-app.options("*", (req, res) => {
-  res.setHeader("Access-Control-Allow-Origin", "https://blane3011.github.io");
+app.use((req, res, next) => {
+  const origin = req.headers.origin;
+  if (allowedOrigins.includes(origin)) {
+    res.setHeader("Access-Control-Allow-Origin", origin);
+  }
+
   res.setHeader("Access-Control-Allow-Methods", "GET,POST,OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type,Authorization");
-  res.sendStatus(200);
+
+  // Handle preflight OPTIONS request
+  if (req.method === "OPTIONS") {
+    return res.sendStatus(200);
+  }
+
+  next();
 });
 
 //Route 1: Get API Keys
@@ -50,6 +51,7 @@ app.get("/API/GETKEYS", async (req, res) => {
     });
 
     const data = await response.json();
+    
     res.json(data);
   } catch (error) {
     res.status(500).json({ error: error.message });
