@@ -1,7 +1,7 @@
 
 
-//ONESIGNAL_API_KEY = "Key".concat(" ", process.env.ONESIGNAL_API_KEY);
-//ONESIGNAL_APP_ID = process.env.APP_ID;
+ONESIGNAL_API_KEY = "Key".concat(" ", process.env.ONESIGNAL_API_KEY);
+ONESIGNAL_APP_ID = process.env.APP_ID;
 
 alert("Translation script loaded.");
 
@@ -174,23 +174,13 @@ recognition.onresult = function(event){
   alert("Translated to Spanish: " + translateText(event.results[0][0].transcript, "es"));
 };
 
- async function sendErrorNotification(){
-  const options = {
-    method: 'POST',
-    headers: {Authorization: ONESIGNAL_API_KEY, 'Content-Type': 'application/json'},
-    body: JSON.stringify({
-      app_id: ONESIGNAL_APP_ID,
-      contents: {en: 'This feature is not yet implemented.'},
-      target_channel: 'push',
-      template_id: '83e7abb0-1572-4a9d-a5eb-f0c970ea29a7'
-    })
+async function sendErrorNotification(){
+  const response = await fetch("https://your-render-service.onrender.com/api/send-notification", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" }
+  });
+
+  const data = await response.json();
+  console.log(data);
 };
-
-fetch('https://api.onesignal.com/notifications?c=push', options)
-  .then(res => res.json())
-  .then(res => console.log(res))
-  .catch(err => console.error(err));
-
-  console.log("Notification sent.");
- }   // OneSignal code to send a notification
 

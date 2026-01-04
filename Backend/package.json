@@ -1,0 +1,27 @@
+{
+  "name": "translation-app",
+  "version": "1.0.0",
+  "description": "AI Translation PWA",
+  "main": "app.js",
+  "scripts": {
+    "start": "node js/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Blane3011/Translation-App.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Blane3011/Translation-App/issues"
+  },
+  "homepage": "https://github.com/Blane3011/Translation-App#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1",
+    "node-fetch": "^3.3.2"
+  }
+}
