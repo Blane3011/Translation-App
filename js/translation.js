@@ -131,7 +131,8 @@ addMessage("Gracias", "other");
 
 async function translateText(text) {
   try {
-    const res = await fetch("https://translation-app-7o5f.onrender.com/api/translate", {
+    //const res = await fetch("https://translation-app-7o5f.onrender.com/api/translate", {
+    const res = await fetch("https://translate.argosopentech.com/translate", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
