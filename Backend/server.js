@@ -34,29 +34,6 @@ app.use((req, res, next) => {
   next();
 });
 
-//Route 1: Get API Keys
-app.get("/API/GETKEYS", async (req, res) => {
-  try {
-    const response = await fetch("https://translation-app-7o5f.onrender.com", {
-      method: "POST",
-      headers: {
-        "Authorization": `Bearer ${OPENAI_API_KEY}`,
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        model: "text-davinci-003",
-        prompt: "Hello from Ewan Blane!",
-        max_tokens: 50
-      })
-    });
-
-    const data = await response.json();
-    
-    res.json(data);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-}); // <-- closes app.get
 
 //Route 2: Send OneSignal notification to alert user feature is not implemented
 app.post("/api/send-notification", async (req, res) => {
