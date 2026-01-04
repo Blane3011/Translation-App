@@ -4,7 +4,7 @@
   "description": "AI Translation PWA",
   "main": "app.js",
   "scripts": {
-    "start": "node js/server.js"
+    "start": "node Backend/server.js"
   },
   "repository": {
     "type": "git",
