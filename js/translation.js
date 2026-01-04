@@ -160,7 +160,7 @@ while(document.getElementById("messageBox").firstChild)
 
 console.log("Messages array:", messages);
   for (let i = 0; i < messages.length; i++) {
-    CreateMessageCard(messages[i].original, messages[i].translated, messages[i].source);
+    CreateMessageCard(messages[i].original, messages[i].source);
   }
   
 if(messages.length == 0)
