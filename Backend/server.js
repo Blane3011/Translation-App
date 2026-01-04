@@ -6,7 +6,10 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const app = express();
+
 const PORT = process.env.PORT || 3000;
+const ONESIGNAL_API_KEY = process.env.ONESIGNAL_API_KEY || "dummy_key";
+const APP_ID = process.env.APP_ID || "dummy_app_id";
 
 // ===== Middleware FIRST =====
 app.use(express.json());
@@ -84,3 +87,11 @@ app.post("/api/translate", async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+try {
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
+} catch (err) {
+  console.error("Server failed to start:", err);
+  process.exit(1);
+}
