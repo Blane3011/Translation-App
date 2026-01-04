@@ -3,30 +3,30 @@ import cors from "cors";
 import fetch from "node-fetch";
 import dotenv from "dotenv";
 
-//Loads in environment variables
 dotenv.config();
 
 const app = express();
-app.use(cors());
 app.use(express.json());
 
-const PORT = 3000;
-const allowedOrigin = "https://blane3011.github.io/Translation-App/"
+const PORT = process.env.PORT || 3000;
 
-API_Key = "1_YbsRg5HZBg2yXDF5Y7C0PCaey";
-API_URL = "https://smartcat.ai/api/integration/v1/translate/text"
-API_User = "de98bb98-4f83-44e7-9b40-3366d61f8a82"
+// Environment variables
+const ONESIGNAL_API_KEY = process.env.ONESIGNAL_API_KEY;
+const ONESIGNAL_APP_ID = process.env.APP_ID;
 
+// CORS - only allows requests from the PWA domain
+const allowedOrigins = ["https://blane3011.github.io/Translation-App/"];
 app.use(cors({
   origin: function(origin, callback) {
     if (!origin || allowedOrigins.indexOf(origin) !== -1) {
       callback(null, true);
     } else {
-      callback(new Error("Access denied by CORS policy."));
+      callback(new Error("Not allowed by CORS"));
     }
   }
 }));
 
+//Route 1: Get API Keys
 app.get("/API/GETKEYS", async (req, res) => {
   try {
     const response = await fetch("https://translation-app-7o5f.onrender.com", {
@@ -42,7 +42,15 @@ app.get("/API/GETKEYS", async (req, res) => {
       })
     });
 
- app.post("/api/send-notification", async (req, res) => {
+    const data = await response.json();
+    res.json(data);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+}); // <-- closes app.get
+
+//Route 2: Send OneSignal notification to alert user feature is not implemented
+app.post("/api/send-notification", async (req, res) => {
   const { message } = req.body;
 
   try {
@@ -52,7 +60,7 @@ app.get("/API/GETKEYS", async (req, res) => {
         "Authorization": `Basic ${ONESIGNAL_API_KEY}`,
         "Content-Type": "application/json"
       },
-       body: JSON.stringify({
+      body: JSON.stringify({
         app_id: ONESIGNAL_APP_ID,
         template_id: "83e7abb0-1572-4a9d-a5eb-f0c970ea29a7", // Your template ID
         included_segments: ["All"]
@@ -60,16 +68,11 @@ app.get("/API/GETKEYS", async (req, res) => {
     });
 
     const data = await response.json();
-    res.json(data); // Send only API response, not your key
+    res.json(data);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
-});
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
+}); 
 
-const ONESIGNAL_API_KEY = process.env.ONESIGNAL_API_KEY;
-const ONESIGNAL_APP_ID = process.env.APP_ID;
-
-app.listen(PORT, () => console.log("Server running on port 3000"));
+//Starts the server 
+app.listen(PORT, () => console.log(`Server running on port: ${PORT}`));
