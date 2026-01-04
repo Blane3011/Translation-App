@@ -174,31 +174,6 @@ recognition.onresult = function(event){
   alert("Translated to Spanish: " + translateText(event.results[0][0].transcript, "es"));
 };
 
-async function translateText(text, targetLanguage = "es")
- {
-   const body = {
-    texts: text,
-    targetLanguages: targetLanguage,
-    sourceLanguage: "en"
-  };
-
-  const response = await fetch(API_URL, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": "Basic " + btoa(API_User + ":" + API_Key)
-    },
-    body: JSON.stringify(body)
-  });
-
-  if (!response.ok) {
-    throw new Error("Smartcat API error: " + response.status);
-  }
-
-  const data = await response.json();
-  return data.translation || data.translatedText || data;
- }
-
  async function sendErrorNotification(){
   const options = {
     method: 'POST',
