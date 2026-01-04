@@ -18,15 +18,23 @@
         <meta name="apple-mobile-web-app-title" content="AI Translator" />
         <link rel="manifest" href="Images/Favicons/site.webmanifest" />
 
-        <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
-            <script>
-                window.OneSignalDeferred = window.OneSignalDeferred || [];
-                OneSignalDeferred.push(async function(OneSignal) {
-                await OneSignal.init({
-                appId: "32bc6da0-e20f-4d5a-bcde-8d0c5d9c32ac",
-                 });
+        <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async></script>
+
+        <script>
+            window.OneSignal = window.OneSignal || [];
+
+            OneSignal.push(function ()
+            {
+                OneSignal.init(
+                {
+                    appId: "32bc6da0-e20f-4d5a-bcde-8d0c5d9c32ac",
+                    serviceWorkerPath: "Translation-App/OneSignalSDKWorker.js",
+                    serviceWorkerUpdaterPath: "Translation-App/OneSignalSDKUpdaterWorker.js",
+                    serviceWorkerParam: { scope: "/Translation-App/" },
+                    allowLocalhostAsSecureOrigin: false
                 });
-            </script>
+            });
+        </script>
     </head>
     <body>
 
