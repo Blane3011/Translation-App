@@ -15,7 +15,7 @@ const ONESIGNAL_API_KEY = process.env.ONESIGNAL_API_KEY;
 const ONESIGNAL_APP_ID = process.env.APP_ID;
 
 // CORS - only allows requests from the PWA domain
-const allowedOrigins = ["https://blane3011.github.io/Translation-App/"];
+const allowedOrigins = ["https://blane3011.github.io"];
 app.use(cors({
   origin: function(origin, callback) {
     if (!origin || allowedOrigins.indexOf(origin) !== -1) {

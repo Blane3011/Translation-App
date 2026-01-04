@@ -1,5 +1,5 @@
 {
-  "name": "translation-app",
+  "name": "translation-app-backend",
   "version": "1.0.0",
   "description": "AI Translation PWA",
   "main": "server.js",
