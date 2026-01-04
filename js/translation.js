@@ -174,7 +174,7 @@ sendErrorNotification();
 
 
 
-async function translatestText(text) {
+async function translatetestText(text) {
   try {
     const res = await fetch("https://libretranslate.com/translate", {
       method: "POST",
