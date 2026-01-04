@@ -37,7 +37,7 @@ app.get("/API/GETKEYS", async (req, res) => {
       },
       body: JSON.stringify({
         model: "text-davinci-003",
-        prompt: "Hello from my PWA!",
+        prompt: "Hello from Ewan Blane!",
         max_tokens: 50
       })
     });
@@ -54,7 +54,7 @@ app.get("/API/GETKEYS", async (req, res) => {
       },
        body: JSON.stringify({
         app_id: ONESIGNAL_APP_ID,
-        template_id: "83e7abb0-1572-4a9d-a5eb-f0c970ea29a7",
+        template_id: "83e7abb0-1572-4a9d-a5eb-f0c970ea29a7", // Your template ID
         included_segments: ["All"]
       })
     });
@@ -65,6 +65,9 @@ app.get("/API/GETKEYS", async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 
 const ONESIGNAL_API_KEY = process.env.ONESIGNAL_API_KEY;
 const ONESIGNAL_APP_ID = process.env.APP_ID;
