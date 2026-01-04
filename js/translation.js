@@ -86,6 +86,7 @@ async function CreateMessageCard(originalText, source)
 
   const translatedText = await translateText(originalText, "es");
   console.log("Translated " , originalText, "into ", " Translated text:", translatedText);
+  console.log("Message source:", source);
   var messageCard = document.createElement("div");
   switch(source)
   {
