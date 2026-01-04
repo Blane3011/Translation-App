@@ -128,9 +128,6 @@ function addMessage(originalText, source)
 addMessage("Hello", "user");  
 addMessage("Goodbye", "user");
 addMessage("Gracias", "other");
-addMessage("Gracias", "other");
-addMessage("Gracias",  "other");
-addMessage("Gracias", "other");
 
 async function translateText(text) {
   try {
