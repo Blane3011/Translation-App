@@ -1,8 +1,4 @@
 
-
-ONESIGNAL_API_KEY = "Key".concat(" ", process.env.ONESIGNAL_API_KEY);
-ONESIGNAL_APP_ID = process.env.APP_ID;
-
 alert("Translation script loaded.");
 
 var recording = false
