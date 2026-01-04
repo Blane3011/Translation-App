@@ -169,65 +169,6 @@ async function translateText(text) {
 
 sendErrorNotification();
 
-
-
-
-
-
-async function translatetestText(text) {
-  try {
-    const res = await fetch("https://libretranslate.com/translate", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        q: text,
-        source: "en",
-        target: "es",
-        format: "text"
-      })
-    });
-
-    if (!res.ok) {
-      const errorText = await res.text();
-      throw new Error(`Server responded with ${res.status}: ${errorText}`);
-    }
-
-    const data = await res.json();
-    return data.translatedText; // only the translated text
-  } catch (err) {
-    console.error("Translation failed:", err);
-    throw err;
-  }
-}
-
-// Example usage:
-translatetestText("Hello world")
-  .then(translated => console.log(translated)) // Output: "Hola Mundo"
-  .catch(err => console.error(err));
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //Clears all of the current messages in the message box to prevent duplicates when reloading.
 while(document.getElementById("messageBox").firstChild)
 {

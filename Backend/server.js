@@ -59,12 +59,26 @@ app.post("/api/translate", async (req, res) => {
       }
     );
 
-    console.log("LibreTranslate status:", response.status);
+    const contentType = response.headers.get("content-type");
 
-    const text = await response.text(); // IMPORTANT
-    console.log("LibreTranslate raw response:", text);
+    // If LibreTranslate returned JSON
+    if (contentType && contentType.includes("application/json")) {
+      const data = await response.json();
 
-    res.json(JSON.parse(text));
+      // Safety check: make sure translatedText exists
+      if (!data.translatedText) {
+        console.warn("LibreTranslate JSON missing translatedText:", data);
+        return res.status(500).json({ error: "LibreTranslate returned invalid JSON", raw: data });
+      }
+
+      return res.json(data); // Send the translated text back
+    }
+
+    // If LibreTranslate returned something else (HTML, error page)
+    const text = await response.text();
+    console.error("LibreTranslate returned non-JSON response:", text);
+    return res.status(500).json({ error: "LibreTranslate did not return JSON", raw: text });
+
   } catch (err) {
     console.error("TRANSLATE ERROR:", err);
     res.status(500).json({ error: err.message });
